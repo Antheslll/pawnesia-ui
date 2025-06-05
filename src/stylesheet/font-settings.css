@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "poppins-font";
+  src: url("/font/poppins-font/Poppins-Full-Version/Web Fonts/Poppins/Poppins-Regular.woff2");
+}
+
+.poppins-font {
+  font-family: poppins-font;
+}
+
+@font-face {
+  font-family: "nunito-font";
+  src: url("/font/Nunito-Full-Version/Web Fonts/Nunito/Nunito-Regular.woff2");
+}
+
+.nunito-font {
+  font-family: nunito-font;
+}
