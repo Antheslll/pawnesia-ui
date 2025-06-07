@@ -1,12 +1,13 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import AuthBannerUI from "@/components/auth-ui/banner/banner";
+import AuthBannerUI from "@/components/home-ui/banner/banner";
 import AuthButtonUI from "@/components/auth-ui/button/button";
 import InputArea from "@/components/auth-ui/input/input-area";
 import Image from "next/image";
 import { useForm } from "@/hook/useForm";
-import { registerFetcher } from "@/lib/auth/registerFetcher";
+import { authPostFetcher } from "@/lib/fetcher/auth/authPostFetcher";
+import Link from "next/link";
 
 const initialFormValues = {
   email: "",
@@ -75,9 +76,8 @@ const RegisterForm = () => {
 
   const submitUser = async () => {
     try {
-      console.log("ini data yang terkirim: ", formValues);
-      const result = await registerFetcher(
-        "http://localhost:5000/auth/register",
+      const result = await authPostFetcher(
+        "http://localhost:5000/api/auth/register",
         formValues,
         errorHandler
       );
@@ -89,8 +89,7 @@ const RegisterForm = () => {
         router.replace("/auth?mode=login");
       }
     } catch (err) {
-      console.log(err);
-      console.error(err);
+      throw err;
     }
   };
 
@@ -100,7 +99,7 @@ const RegisterForm = () => {
         <AuthBannerUI image={`url("./auth-page-image/register-image.png")`} />
         <form
           onSubmit={inputPageHandle}
-          className="w-full h-full grid grid-rows-[15vh_20vh_30vh_20vh] "
+          className="w-full h-full grid grid-rows-[15vh_20vh_30vh_15vh_10vh] "
         >
           <div className="flex-centered">
             <Image
@@ -134,6 +133,13 @@ const RegisterForm = () => {
           </div>
           <div className="flex-centered">
             <AuthButtonUI buttonText="Sign Up" />
+          </div>
+          <div className="w-full h-full flex-centered">
+            <Link href="/auth?mode=login">
+              <span className="text-blue-600 text-[13px] underline nunito-font cursor-pointer">
+                already have an account?
+              </span>
+            </Link>
           </div>
         </form>
       </div>

@@ -1,4 +1,4 @@
-export async function registerFetcher<T>(
+export async function authPostFetcher<T>(
   url: string,
   data: unknown,
   handler: (message: string) => void
