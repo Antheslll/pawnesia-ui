@@ -44,3 +44,18 @@ export interface ProductResponse {
     topProducts: Product[];
   };
 }
+
+export interface ProductDetailResponse {
+  status: string;
+  message: string;
+  data: {
+    uuid: string;
+    product_id: string;
+    product_name: string;
+    product_price: number;
+    product_image: string;
+    product_description: string;
+    category: string;
+    stock: number;
+  };
+}

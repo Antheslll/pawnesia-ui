@@ -1,18 +1,21 @@
 "use client";
 import TopProducts from "@/components/home-ui/topProducts";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ProductResponse, UserInfoTypes } from "@/types";
 import Navbar from "@/components/navbar/navbar";
 import Banner from "@/components/page/home-page/banner/banner";
 import { showProducts } from "@/lib/fetcher/products/productsFetcher";
 import { validateToken } from "@/lib/fetcher/token/tokenValidator";
+import ProductArea from "@/components/home-ui/productArea";
 
 export default function Home() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [userData, setUserData] = useState<UserInfoTypes | null>(null);
   const [category, setCategory] = useState("All");
   const [productData, setProductData] = useState<ProductResponse | null>(null);
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get("filteredCategory");
   const router = useRouter();
 
   const errorHandler = (message: string) => {
@@ -32,6 +35,9 @@ export default function Home() {
       return;
     }
     validateToken(token, errorHandler, handleUser);
+    if (categoryParam) {
+      setCategory(categoryParam);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -51,20 +57,23 @@ export default function Home() {
     console.log(productData);
   }, [productData]);
 
+  const handleCategory = (category: string) => {
+    setCategory(category);
+    router.replace(`/?filteredCategory=${category}`);
+  };
+
   return (
     <div>
-      <Navbar />
+      <Navbar handleCategory={handleCategory} />
       <div className="w-full h-auto grid grid-cols-[10%_90%]">
         <div></div>
-        <div className="w-full h-full">
+        <div className="w-full h-full ">
           <Banner />
-          <TopProducts />
-          {productData?.data.topProducts.map((product: any) => (
-            <div key={product.uuid}>
-              <p>nama:{product.product_name}</p>
-              <p>harga:{product.product_price}</p>
-            </div>
-          ))}
+          <TopProducts
+            topProductData={productData?.data?.topProducts || null}
+          />
+          <hr />
+          <ProductArea productData={productData?.data?.products || null} />
         </div>
       </div>
     </div>

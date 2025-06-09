@@ -2,17 +2,35 @@ import { CartIcon, MailIcon } from "@/svg-assets/cart-icon";
 import { SearchIcon } from "@/svg-assets/search-icon";
 import Sidebar from "./sidebar";
 
-const Navbar = () => {
+interface NavbarTypes {
+  handleCategory: (category: string) => void;
+}
+
+const Navbar = ({ handleCategory }: NavbarTypes) => {
   return (
     <nav className="w-full h-[15vh] grid grid-cols-[10%_90%]">
       <Sidebar />
       <div className="w-full h-full flex-centered"></div>
       <div className=" grid grid-cols-[30%_40%_10%_15%]">
         <ul className=" flex flex-row text-[8px] gap-3 flex-centered poppins-font font-bold gray-blue-text-color">
-          <li>ALL</li>
-          <li>FOOD</li>
-          <li>ACCESSORIES</li>
-          <li>ANIMALS</li>
+          <li className="cursor-pointer" onClick={() => handleCategory("All")}>
+            ALL
+          </li>
+          <li className="cursor-pointer" onClick={() => handleCategory("Food")}>
+            FOOD
+          </li>
+          <li
+            className="cursor-pointer"
+            onClick={() => handleCategory("Accessories")}
+          >
+            ACCESSORIES
+          </li>
+          <li
+            className="cursor-pointer"
+            onClick={() => handleCategory("Animal")}
+          >
+            ANIMALS
+          </li>
         </ul>
         <div className="w-full h-full  flex items-center">
           <input

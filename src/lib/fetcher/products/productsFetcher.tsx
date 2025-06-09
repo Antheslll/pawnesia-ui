@@ -10,7 +10,7 @@ export const showProducts = async (url: string) => {
       const errorResult = await response.json();
       throw new Error(JSON.stringify(errorResult));
     }
-
+    console.log(response);
     const result = await response.json();
     return result;
   } catch (err) {
