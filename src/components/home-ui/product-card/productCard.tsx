@@ -19,7 +19,6 @@ const ProductCard = ({
   const productDetailNavigate = (uuid: string) => {
     router.push(`/product/${uuid}`);
   };
-  console.log(uuid);
   return (
     <div
       className="w-[15vw] h-[20vw]"
@@ -36,7 +35,7 @@ const ProductCard = ({
         </div>
       </div>
       <h4 className="text-[13px]">{productName}</h4>
-      <span>{productPrice}</span>
+      <span>{`Rp ${productPrice.toLocaleString("ID")},-`}</span>
     </div>
   );
 };

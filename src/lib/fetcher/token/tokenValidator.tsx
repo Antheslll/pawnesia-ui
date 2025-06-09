@@ -11,6 +11,5 @@ export const validateToken = async (
     token,
     errorHandler
   );
-  console.log("Result from userInfoFetcher: ", result);
   handleUserdata(result);
 };

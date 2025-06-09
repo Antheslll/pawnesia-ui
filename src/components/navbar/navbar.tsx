@@ -4,9 +4,10 @@ import Sidebar from "./sidebar";
 
 interface NavbarTypes {
   handleCategory: (category: string) => void;
+  profileURL: string | undefined;
 }
 
-const Navbar = ({ handleCategory }: NavbarTypes) => {
+const Navbar = ({ handleCategory, profileURL }: NavbarTypes) => {
   return (
     <nav className="w-full h-[15vh] grid grid-cols-[10%_90%]">
       <Sidebar />
@@ -47,7 +48,10 @@ const Navbar = ({ handleCategory }: NavbarTypes) => {
           <MailIcon />
         </div>
         <div className="w-full h-full flex-centered">
-          <div className="bg-white w-[30px] h-[30px] rounded-full"></div>
+          <div
+            className="bg-cover bg-center  w-[50px] h-[50px] rounded-full"
+            style={{ backgroundImage: `url(${profileURL})` }}
+          ></div>
         </div>
       </div>
     </nav>

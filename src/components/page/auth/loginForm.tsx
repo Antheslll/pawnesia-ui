@@ -1,3 +1,4 @@
+"use client";
 import AuthBannerUI from "@/components/home-ui/banner/banner";
 import AuthButtonUI from "@/components/auth-ui/button/button";
 import AuthInputUI from "@/components/auth-ui/input/input";
@@ -108,7 +109,7 @@ const LoginForm = () => {
           <div className="w-full h-full flex-centered">
             <Link href="/auth?mode=register">
               <span className="text-blue-600 text-[13px] underline nunito-font cursor-pointer">
-                don't have an account?
+                don&apos;t have an account?
               </span>
             </Link>
           </div>

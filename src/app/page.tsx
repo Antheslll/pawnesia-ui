@@ -26,6 +26,7 @@ export default function Home() {
 
   const handleUser = (data: UserInfoTypes | null) => {
     setUserData(data);
+    console.log(data);
   };
 
   useEffect(() => {
@@ -53,10 +54,6 @@ export default function Home() {
     }
   }, [userData, category]);
 
-  useEffect(() => {
-    console.log(productData);
-  }, [productData]);
-
   const handleCategory = (category: string) => {
     setCategory(category);
     router.replace(`/?filteredCategory=${category}`);
@@ -64,7 +61,10 @@ export default function Home() {
 
   return (
     <div>
-      <Navbar handleCategory={handleCategory} />
+      <Navbar
+        handleCategory={handleCategory}
+        profileURL={userData?.data?.profile_url}
+      />
       <div className="w-full h-auto grid grid-cols-[10%_90%]">
         <div></div>
         <div className="w-full h-full ">
@@ -79,14 +79,3 @@ export default function Home() {
     </div>
   );
 }
-
-// {productData?.data?.products?.length > 0 ? (
-//             productData.data.products.map((product: any) => (
-//               <div key={product.id} className="border p-2 mb-2">
-//                 <p>Nama: {product.name}</p>
-//                 <p>Harga: {product.price}</p>
-//               </div>
-//             ))
-//           ) : (
-//             <p>Tidak ada produk</p>
-//           )}

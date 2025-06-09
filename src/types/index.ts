@@ -18,6 +18,7 @@ export interface UserDataTypes {
   userId: string;
   email: string;
   role: string;
+  profile_url: string;
   iat: number;
   exp: number;
 }

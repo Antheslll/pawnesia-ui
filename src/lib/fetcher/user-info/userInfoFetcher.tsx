@@ -17,6 +17,7 @@ export const userInfoFetcher = async <T,>(
     }
     const result = await response.json();
     return result;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     handler(err.message);
     return null as unknown as T;
