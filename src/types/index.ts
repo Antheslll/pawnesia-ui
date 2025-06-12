@@ -32,6 +32,7 @@ export interface UserInfoTypes {
 // types/Product.ts
 export interface Product {
   uuid: string;
+  product_id: string;
   product_image: string;
   product_name: string;
   product_price: number;

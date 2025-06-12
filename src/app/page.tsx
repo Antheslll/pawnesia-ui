@@ -15,6 +15,8 @@ export default function Home() {
   const [userData, setUserData] = useState<UserInfoTypes | null>(null);
   const [category, setCategory] = useState("All");
   const [productData, setProductData] = useState<ProductResponse | null>(null);
+  const [openCart, setOpenCart] = useState(false);
+  const [closeCartAccess, setCloseCartAccess] = useState(true);
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("filteredCategory");
   const router = useRouter();
@@ -60,13 +62,31 @@ export default function Home() {
     router.replace(`/?filteredCategory=${category}`);
   };
 
+  const handleOpenCart = () => {
+    if (closeCartAccess) {
+      setOpenCart(!openCart);
+    } else {
+      return;
+    }
+  };
+
+  const handleCloseCartAccess = (bool: boolean) => {
+    setCloseCartAccess(bool);
+  };
+
   return (
     <>
-      <Cart />
+      {openCart && (
+        <Cart
+          handleOpenCart={handleOpenCart}
+          handleCloseCartAccess={handleCloseCartAccess}
+        />
+      )}
       <div>
         <Navbar
           handleCategory={handleCategory}
           profileURL={userData?.data?.profile_url}
+          handleOpenCart={handleOpenCart}
         />
         <div className="w-full h-auto grid grid-cols-[10%_90%]">
           <div></div>

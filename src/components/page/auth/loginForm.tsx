@@ -17,8 +17,8 @@ const initialFormValues = {
 const LoginForm = () => {
   const { formValues, handleChange } = useForm(initialFormValues);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const token = localStorage.getItem("auth_token");
-  console.log(token);
+  // const token = localStorage.getItem("auth_token");
+  // console.log(token);
   const credentialChecked = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formValues.email === "" || formValues.password === "") {

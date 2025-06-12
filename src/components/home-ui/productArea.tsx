@@ -13,6 +13,7 @@ const ProductArea = ({ productData }: ProductAreaTypes) => {
         {productData?.map((product: any) => (
           <ProductCard
             key={product.uuid}
+            productId={product.product_id}
             uuid={product.uuid}
             productImage={product.product_image}
             productName={product.product_name}

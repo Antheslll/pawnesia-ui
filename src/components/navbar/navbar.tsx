@@ -5,9 +5,14 @@ import Sidebar from "./sidebar";
 interface NavbarTypes {
   handleCategory: (category: string) => void;
   profileURL: string | undefined;
+  handleOpenCart: () => void;
 }
 
-const Navbar = ({ handleCategory, profileURL }: NavbarTypes) => {
+const Navbar = ({
+  handleCategory,
+  profileURL,
+  handleOpenCart,
+}: NavbarTypes) => {
   return (
     <nav className="w-full h-[15vh] grid grid-cols-[10%_90%]">
       <Sidebar />
@@ -44,7 +49,9 @@ const Navbar = ({ handleCategory, profileURL }: NavbarTypes) => {
           </div>
         </div>
         <div className="flex-centered gap-3">
-          <CartIcon />
+          <div onClick={handleOpenCart}>
+            <CartIcon />
+          </div>
           <MailIcon />
         </div>
         <div className="w-full h-full flex-centered">

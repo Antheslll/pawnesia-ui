@@ -17,6 +17,7 @@ const TopProducts = ({ topProductData }: TopProductsType) => {
           <ProductCard
             key={product.uuid}
             uuid={product.uuid}
+            productId={product.product_id}
             productImage={product.product_image}
             productName={product.product_name}
             productPrice={product.product_price}
