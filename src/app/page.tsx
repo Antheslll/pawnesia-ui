@@ -8,6 +8,7 @@ import Banner from "@/components/page/home-page/banner/banner";
 import { showProducts } from "@/lib/fetcher/products/productsFetcher";
 import { validateToken } from "@/lib/fetcher/token/tokenValidator";
 import ProductArea from "@/components/home-ui/productArea";
+import Cart from "@/components/cart/cart";
 
 export default function Home() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -60,22 +61,25 @@ export default function Home() {
   };
 
   return (
-    <div>
-      <Navbar
-        handleCategory={handleCategory}
-        profileURL={userData?.data?.profile_url}
-      />
-      <div className="w-full h-auto grid grid-cols-[10%_90%]">
-        <div></div>
-        <div className="w-full h-full ">
-          <Banner />
-          <TopProducts
-            topProductData={productData?.data?.topProducts || null}
-          />
-          <hr />
-          <ProductArea productData={productData?.data?.products || null} />
+    <>
+      <Cart />
+      <div>
+        <Navbar
+          handleCategory={handleCategory}
+          profileURL={userData?.data?.profile_url}
+        />
+        <div className="w-full h-auto grid grid-cols-[10%_90%]">
+          <div></div>
+          <div className="w-full h-full ">
+            <Banner />
+            <TopProducts
+              topProductData={productData?.data?.topProducts || null}
+            />
+            <hr />
+            <ProductArea productData={productData?.data?.products || null} />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -6,6 +6,7 @@ interface CommentCardTypes {
   firstName: string;
   lastName: string;
   profilePicture: string;
+  link: string;
 }
 
 const CommentCard = ({
@@ -14,6 +15,7 @@ const CommentCard = ({
   profilePicture,
   rating,
   comment,
+  link,
 }: CommentCardTypes) => {
   return (
     <div className="w-[95%] min-h-[50vh] bg-white flex flex-col">
@@ -35,6 +37,12 @@ const CommentCard = ({
       </div>
       <div className="w-full h-[15vh] pl-5 pr-5">
         <p>{comment}</p>
+      </div>
+      <div className="pl-5">
+        <div
+          className="w-[5vw] h-[5vw] bg-cover bg-center"
+          style={{ backgroundImage: `url(${link})` }}
+        ></div>
       </div>
     </div>
   );

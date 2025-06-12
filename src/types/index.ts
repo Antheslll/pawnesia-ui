@@ -60,3 +60,26 @@ export interface ProductDetailResponse {
     stock: number;
   };
 }
+
+export interface UserInfo {
+  profile_picture: string;
+  first_name: string;
+  last_name: string;
+}
+
+export interface CommentItem {
+  comment_id: string;
+  user_id: string;
+  product_id: string;
+  rating: number;
+  comments: string;
+  link: string;
+  comment_time: string; // ISO date string, bisa pakai Date kalau kamu parsing
+  User?: UserInfo; // Opsional karena hanya muncul di elemen pertama
+}
+
+export interface CommentResponse {
+  status: string;
+  message: string;
+  data: CommentItem[];
+}
