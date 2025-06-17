@@ -38,14 +38,25 @@ interface CartItemsResponse {
   data: CartItem[];
 }
 
+interface prepareCartCheckoutData {
+  cartItemId: string;
+  productData: {
+    product_id: string;
+    quantity: number;
+    product_price: number;
+  };
+}
+
 interface ItemCartProps {
   cartItemId: string;
   productImage: string;
   productName: string;
   productPrice: number;
   initialQuantity: number;
+  productId: string;
   handleCartData: (data: CartItemsResponse) => void;
   handleCloseCartAccess: (bool: boolean) => void;
+  handleSelectedCartData: (item: prepareCartCheckoutData, tf: boolean) => void;
 }
 
 const ItemCart = ({
@@ -56,9 +67,12 @@ const ItemCart = ({
   initialQuantity,
   handleCartData,
   handleCloseCartAccess,
+  handleSelectedCartData,
+  productId,
 }: ItemCartProps) => {
   const [quantity, setQuantity] = useState(1);
   const [subtotal, setSubtotal] = useState(0);
+  const [isChecked, setIsChecked] = useState(false);
 
   let timeOutId: string | number | NodeJS.Timeout | undefined;
 
@@ -120,10 +134,24 @@ const ItemCart = ({
     return;
   };
 
+  const handleChange = () => {
+    const data = {
+      cartItemId: cartItemId,
+      productData: {
+        product_id: productId,
+        quantity: quantity,
+        product_price: productPrice,
+      },
+    };
+
+    setIsChecked(!isChecked);
+    handleSelectedCartData(data, !isChecked);
+  };
+
   return (
     <div className="w-full h-[10vh] grid grid-cols-[5%_40%_15%_20%_20%]">
       <div className="w-full h-full flex flex-col justify-center items-center">
-        <input type="checkbox" />
+        <input type="checkbox" onChange={handleChange} />
         <span
           className="text-red-500 font-bold poppins-font cursor-pointer"
           onClick={removeItem}
@@ -140,10 +168,11 @@ const ItemCart = ({
           <span className="text-[13px]">{productName}</span>
         </div>
       </div>
-      <div className="flex-centered  gap-1">
+      <div className="flex-centered gap-1">
         <button
           className="w-[20%] border-2 border-gray-600"
           onClick={handleSubtractQuantity}
+          disabled={isChecked}
         >
           -
         </button>
@@ -156,6 +185,7 @@ const ItemCart = ({
         <button
           className=" w-[20%] border-2 border-gray-600"
           onClick={handleAddQuantity}
+          disabled={isChecked}
         >
           +
         </button>

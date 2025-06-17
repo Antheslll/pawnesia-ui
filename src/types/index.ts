@@ -84,3 +84,43 @@ export interface CommentResponse {
   message: string;
   data: CommentItem[];
 }
+
+export interface OrderDetailDraftData {
+  amount: number;
+  order_detail_id: string;
+  order_id: string;
+  product_id: string;
+  quantity: number;
+  subtotal: number;
+}
+
+export interface OrdersDraftData {
+  estimate_arrival: string | null;
+  order_id: string;
+  order_time: string | null;
+  proof_of_transfer: string | null;
+  status: string | null;
+  total_price: number;
+  user_id: string;
+}
+
+export interface ShippingAddressData {
+  address: string | null;
+  order_id: string;
+  phone_number: string | null;
+  receiver_name: string | null;
+  shipping_address_id: string | null;
+}
+
+export interface CreateCheckoutDraftResponse {
+  OrderDetailDraftData: OrderDetailDraftData[];
+  OrdersDraftData: OrdersDraftData[];
+  ShippingAddressDraftData: ShippingAddressData[];
+}
+
+export interface ReceiverDataProps {
+  name: string;
+  phoneNumber1: string;
+  phoneNumber2: string;
+  address: string;
+}

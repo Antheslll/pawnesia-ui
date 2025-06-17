@@ -65,6 +65,9 @@ const ProductCard = ({
       onClick={() => {
         productDetailNavigate(uuid);
       }}
+      onMouseEnter={() => {
+        console.log(productId);
+      }}
     >
       <div
         className="w-[15vw] h-[15vw] bg-center bg-cover flex justify-end pt-1.5 pr-1.5"

@@ -2,13 +2,19 @@
 import TopProducts from "@/components/home-ui/topProducts";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ProductResponse, UserInfoTypes } from "@/types";
+import {
+  CreateCheckoutDraftResponse,
+  ProductResponse,
+  UserInfoTypes,
+} from "@/types";
 import Navbar from "@/components/navbar/navbar";
 import Banner from "@/components/page/home-page/banner/banner";
 import { showProducts } from "@/lib/fetcher/products/productsFetcher";
 import { validateToken } from "@/lib/fetcher/token/tokenValidator";
 import ProductArea from "@/components/home-ui/productArea";
 import Cart from "@/components/cart/cart";
+import CheckoutOverlay from "@/components/checkout/chekoutOverlay";
+import PaymentOverlay from "@/components/checkout/paymentOverlay";
 
 export default function Home() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -17,6 +23,12 @@ export default function Home() {
   const [productData, setProductData] = useState<ProductResponse | null>(null);
   const [openCart, setOpenCart] = useState(false);
   const [closeCartAccess, setCloseCartAccess] = useState(true);
+  const [openCheckout, setOpenCheckout] = useState(false);
+  const [checkoutInfo, setCheckoutInfo] =
+    useState<CreateCheckoutDraftResponse | null>(null);
+  const [openPayment, setOpenPayment] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [totalPrice, setTotalPrice] = useState(0);
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("filteredCategory");
   const router = useRouter();
@@ -29,16 +41,18 @@ export default function Home() {
 
   const handleUser = (data: UserInfoTypes | null) => {
     setUserData(data);
-    console.log(data);
   };
 
   useEffect(() => {
     const token = localStorage.getItem("auth_token");
+
     if (!token) {
       router.push("/auth?mode=login");
       return;
     }
+
     validateToken(token, errorHandler, handleUser);
+
     if (categoryParam) {
       setCategory(categoryParam);
     }
@@ -74,12 +88,47 @@ export default function Home() {
     setCloseCartAccess(bool);
   };
 
+  const handleCheckoutOverlay = (bool: boolean) => {
+    setOpenCheckout(bool);
+  };
+  const handleCheckoutData = (data: any) => {
+    setCheckoutInfo(data);
+  };
+  const handlePaymentMethod = (method: string) => {
+    setPaymentMethod(method);
+  };
+  const handleOpenPayment = (bool: boolean) => {
+    setOpenPayment(bool);
+  };
+  const handleTotalPrice = (price: number) => {
+    setTotalPrice(price);
+  };
+
   return (
     <>
       {openCart && (
         <Cart
           handleOpenCart={handleOpenCart}
           handleCloseCartAccess={handleCloseCartAccess}
+          handleCheckoutOverlay={handleCheckoutOverlay}
+          handleCheckoutData={handleCheckoutData}
+        />
+      )}
+      {openCheckout && (
+        <CheckoutOverlay
+          handleCheckoutOverlay={handleCheckoutOverlay}
+          checkoutInfo={checkoutInfo}
+          handleTotalPrice={handleTotalPrice}
+          handlePaymentMethod={handlePaymentMethod}
+          handleOpenPayment={handleOpenPayment}
+        />
+      )}
+      {openPayment && (
+        <PaymentOverlay
+          paymentMethod={paymentMethod}
+          totalPrice={totalPrice}
+          handleOpenPayment={handleOpenPayment}
+          orderId={checkoutInfo?.OrdersDraftData?.[0]?.order_id}
         />
       )}
       <div>
