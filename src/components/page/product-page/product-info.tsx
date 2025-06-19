@@ -25,6 +25,8 @@ const ProductInfo = ({
     setCreateComment(!createComment);
   };
 
+  console.log(commentData);
+
   return (
     <>
       {createComment && (

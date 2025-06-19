@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import ItemCart from "./itemCart";
 import { viewItemFetcher } from "@/lib/fetcher/cart/viewItemFetcher";

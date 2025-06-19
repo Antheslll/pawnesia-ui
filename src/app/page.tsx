@@ -44,6 +44,10 @@ export default function Home() {
   };
 
   useEffect(() => {
+    console.log(userData);
+  }, [userData]);
+
+  useEffect(() => {
     const token = localStorage.getItem("auth_token");
 
     if (!token) {

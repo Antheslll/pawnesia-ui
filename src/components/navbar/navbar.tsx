@@ -1,6 +1,7 @@
 import { CartIcon, MailIcon } from "@/svg-assets/cart-icon";
 import { SearchIcon } from "@/svg-assets/search-icon";
 import Sidebar from "./sidebar";
+import Link from "next/link";
 
 interface NavbarTypes {
   handleCategory: (category: string) => void;
@@ -55,10 +56,12 @@ const Navbar = ({
           <MailIcon />
         </div>
         <div className="w-full h-full flex-centered">
-          <div
-            className="bg-cover bg-center  w-[50px] h-[50px] rounded-full"
-            style={{ backgroundImage: `url(${profileURL})` }}
-          ></div>
+          <Link href="/profile" className="cursor-pointer">
+            <div
+              className="bg-cover bg-center w-[50px] h-[50px] rounded-full"
+              style={{ backgroundImage: `url(${profileURL})` }}
+            ></div>
+          </Link>
         </div>
       </div>
     </nav>
