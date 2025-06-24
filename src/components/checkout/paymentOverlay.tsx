@@ -31,15 +31,15 @@ const PaymentOverlay = ({
       "http://localhost:5000/api/upload/transfer",
       file
     )) as CloudResponseTypes;
-    console.log(creatingTransferProof);
 
+    console.log(creatingTransferProof.detail);
     if (orderId) {
       try {
         const migration = await migrationCheckoutFetcher(
           "http://localhost:5000/api/checkout/proof",
           {
             orderId: orderId,
-            link: fileLink,
+            link: creatingTransferProof.detail,
           }
         );
 

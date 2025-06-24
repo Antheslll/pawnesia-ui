@@ -1,23 +1,63 @@
-const OrderCard = () => {
+import { formatDate } from "@/lib/helper/dateFormatter";
+import { DetailInfoProps, OrderDetails } from "@/types";
+
+interface OrderCardProps {
+  orderId: string;
+  status: string;
+  totalPrice: number;
+  purchaseDate: string;
+  proof: string;
+  orderDetail: OrderDetails[];
+  handleOpenOrderDetail: (bool: boolean) => void;
+  handleOrderDetailData: (
+    data: OrderDetails[],
+    details: DetailInfoProps
+  ) => void;
+}
+
+const OrderCard = ({
+  orderId,
+  status,
+  totalPrice,
+  purchaseDate,
+  proof,
+  orderDetail,
+  handleOpenOrderDetail,
+  handleOrderDetailData,
+}: OrderCardProps) => {
+  const details = {
+    orderId,
+    status,
+    totalPrice,
+    purchaseDate,
+    proof,
+  };
   return (
-    <div className="bg-white rounded-md p-6 shadow-md flex flex-row justify-between items-start">
-      <div>
+    <div
+      className="w-[90%] bg-white rounded-md p-6 shadow-md flex flex-row justify-between items-start"
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
+      <div
+        onClick={() => {
+          handleOpenOrderDetail(true);
+          handleOrderDetailData(orderDetail, details);
+        }}
+      >
         <h2 className="text-lg font-semibold">
-          Order-<span className="font-mono text-gray-700">[code]</span>
+          Order-<span className="font-mono text-gray-700">{orderId}</span>
         </h2>
-        <p className="text-sm text-red-600 mt-1">pending</p>
+        <p className="text-sm text-red-600 mt-1">{status}</p>
 
         <div className="mt-4 space-y-2 text-sm text-gray-800">
-          <p>Total: Rp 00.000.000,-</p>
-          <a href="#" className="underline text-blue-700 hover:text-blue-900">
-            produk 1 + 1 item lainnya
-          </a>
+          <p>{`Total: Rp ${totalPrice.toLocaleString("ID")},-`}</p>
         </div>
       </div>
 
       <div className="mt-4 sm:mt-0 text-sm text-gray-600 text-left">
-        <p>01-06-2025</p>
-        <p className="mt-4">Est. tiba 02-06-2025</p>
+        <p>{formatDate(purchaseDate, 0)}</p>
+        <p className="mt-4">Est. tiba {formatDate(purchaseDate, 4)}</p>
       </div>
     </div>
   );

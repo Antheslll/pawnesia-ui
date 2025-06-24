@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import TopProducts from "@/components/home-ui/topProducts";
 import { useEffect, useState } from "react";
@@ -45,22 +47,27 @@ export default function Home() {
 
   useEffect(() => {
     console.log(userData);
+
+    const role = userData?.data?.role;
+
+    if (role === "SELLER") {
+      router.push("seller-dashboard");
+    }
   }, [userData]);
 
   useEffect(() => {
     const token = localStorage.getItem("auth_token");
 
-    if (!token) {
+    if (token) {
+      validateToken(token, errorHandler, handleUser);
+
+      if (categoryParam) {
+        setCategory(categoryParam);
+      }
+    } else if (!token) {
       router.push("/auth?mode=login");
       return;
     }
-
-    validateToken(token, errorHandler, handleUser);
-
-    if (categoryParam) {
-      setCategory(categoryParam);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -121,7 +128,7 @@ export default function Home() {
       {openCheckout && (
         <CheckoutOverlay
           handleCheckoutOverlay={handleCheckoutOverlay}
-          checkoutInfo={checkoutInfo}
+          checkoutInfo={checkoutInfo!}
           handleTotalPrice={handleTotalPrice}
           handlePaymentMethod={handlePaymentMethod}
           handleOpenPayment={handleOpenPayment}
